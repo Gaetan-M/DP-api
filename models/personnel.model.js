@@ -1,8 +1,8 @@
 const mongoose=require('mongoose');
-const roleSchema=require('./roles.js')
+const roleSchema=require('./roles.model')
 
 const personnelSchema=mongoose.Schema({
-	Matricule:{
+	matricule:{
 		type:String,
 		required:true,
 		unique:true
@@ -12,6 +12,10 @@ const personnelSchema=mongoose.Schema({
 		required:true
 	},
 	prenom:{
+		type:String,
+		required:true
+	},
+	hash:{
 		type:String,
 		required:true
 	},
@@ -31,7 +35,7 @@ const personnelSchema=mongoose.Schema({
   role:roleSchema,
   history:[{
 	  _id:String,
-		Matricule:String,
+		matri:String,
 		nom:String,
 		prenom:String,
 		email:String,

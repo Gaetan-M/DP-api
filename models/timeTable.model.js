@@ -42,7 +42,7 @@ const timeTableSchema = new Schema({
   		idHoraire: String,
   		dateDebutSemaine: Date,
   		startDate: Date,
-  		changeDate: Date
+  		changeDate: Date,
   		cours: [
   			{
 		 			tablePosition: Number,

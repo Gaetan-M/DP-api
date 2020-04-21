@@ -1,33 +1,28 @@
-const express = require('express');
-const router = express.Router();
-const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
-let jwt = require('jsonwebtoken');
-let bcrypt = require('bcryptjs');
+const Personnel = require('../models/personnel.model');
 
-// let config = require('../.env');
-
-let Personnel = require('../models/personnel.model');
-
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
-
-router.post('/signin', function (req, res) {
+const signIn = (req,res) => {
 
   const { email, password } = req.body;
 
-  Personnel.findOne({ email: email }, function (err, user) {
-    if (err) return res.status(500).send('Error on the server.');
-    if (!user) return res.status(404).send('No user found.');
-
+  Personnel.findOne({ email })
+  .then(user => {
+    if(!user) {
+     return res.status(404).json({error: "User not found"});
+    }
     let passwordIsValid = bcrypt.compareSync(password, user.hash);
-    if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
-    let token = jwt.sign({ id: user._id }, "SecretKey", {
+    if (!passwordIsValid) return res.status(401).json({ message: {auth: false, token: null }});
+
+    let token = jwt.sign({ user: user }, process.env.JWT_KEY, {
       expiresIn: 86400
     });
+    res.status(200).json({ message: {auth: true, token: token }})
+  })
+  .catch(err => res.status(500).json({ error: err.message }))
 
-    res.status(200).send({ auth: true, token: token });
-  });
+};
 
-});
+module.exports = signIn;

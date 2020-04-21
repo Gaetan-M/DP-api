@@ -1,30 +1,40 @@
 const mongoose=require('mongoose');
-const natureCoursSchema = require('./natureCours.model')
 
 const Schema = mongoose.Schema;
 
-const coursSchema=mongoose.Schema({
+const coursSchema=Schema({
   startDate: {
     type:Date,
     required:true
   },
-  codeDuCours: {
-    type:Number,
-    required:true
+  codeCour: {
+    type:String,
+    required:true,
+    unique: true
   },
-  natureCours: [natureCoursSchema],
-  nomCours: {
+  nomCour: {
     type:String,
     required:true
+  },
+  poids: {
+    type:String,
+    required:true
+  },
+  classes: [], 
+  idEnseignant: {
+    type: String,
+    required: true
   },
   history: [
     {
       _id: String,
       startDate: Date,
       changeDate: Date,
-      codeDuCours: Number,
-      nomCours: String   	
-      natureCours: [natureCoursSchema], 
+      codeCour: String,
+      nomCour: String,   	
+      poids: String,   	
+      idEnseignant: String,
+      classes: [String]
     }
   ]
 })

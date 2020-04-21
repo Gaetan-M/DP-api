@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const horaire = require('./horaire.model')
+const horaireSchema = require('./horaire.model')
 
 const Schema = mongoose.Schema;
 
@@ -10,7 +10,7 @@ const coordonnateurSchema = new Schema({
     required: true,
   },
   classes: [String],
-  horaire:horaire,
+  horaire:horaireSchema,
   startDate: {
     type: Date,
     require: true
@@ -20,7 +20,7 @@ const coordonnateurSchema = new Schema({
   		_id: String,
   		idPersonnel: String,
       classes: [String],
-      horaire:horaire,
+      horaire:horaireSchema,
   		startDate: Date,
   		changeDate: Date
   	}

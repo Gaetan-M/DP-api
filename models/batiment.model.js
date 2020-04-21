@@ -9,24 +9,12 @@ const batimentSchema=mongoose.Schema({
     type:String,
     requied:true
   },
-  salle_de_cours: [
-    { 
-      idSalle:String,
-      nomSalle:String, 
-      capacite:Number 
-    }
-  ],
+  salle_de_cours: [salleSchema],
   history:[
   	{
       nomBatiment:String,
 	    idFaculty:String,
-	    salle_de_cours: [
-	    	{ 
-	    		idSalle:String,
-          nomSalle:String,
-	    		capacite:Number 
-	    	}
-	    ]	
+      salle_de_cours: [salleSchema],
     }
   ]
 })
