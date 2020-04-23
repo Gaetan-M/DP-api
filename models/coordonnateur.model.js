@@ -9,11 +9,11 @@ const coordonnateurSchema = new Schema({
     type: String,
     required: true,
   },
-  classes: [String],
+  classes: [],
   horaire:horaireSchema,
   startDate: {
     type: Date,
-    require: true
+    required: true
   },
   history: [
   	{

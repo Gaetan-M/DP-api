@@ -12,6 +12,7 @@ const faculty = require('./routes/faculty.routes')
 const coordonnateur = require('./routes/coordonnateur.routes')
 const classe = require('./routes/classe.routes')
 const enseignant = require('./routes/enseignant.route')
+const timeTable = require('./routes/timeTable.routes')
 
 
 app.use(cors());
@@ -24,6 +25,7 @@ app.use('/faculty', faculty)
 app.use('/coordo', coordonnateur)
 app.use('/classe', classe)
 app.use('/enseignant', enseignant)
+app.use('/timeTable', timeTable)
 
 app.get('/', (req, res) =>{console.log("someone is here"); res.json({ hello: 'world' })});
   
