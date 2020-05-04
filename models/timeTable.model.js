@@ -12,6 +12,10 @@ const timeTableSchema = new Schema({
     type: String,
     required: true
   },
+  idCoordonnateur:{
+    type:String,
+    required:true
+  },
   idHoraire: {
     type: String,
     required: true
@@ -22,7 +26,7 @@ const timeTableSchema = new Schema({
   },
   startDate: {
     type: Date,
-    require: true
+    required: true
   },
   cours: [
   	{
@@ -42,7 +46,7 @@ const timeTableSchema = new Schema({
   		idHoraire: String,
   		dateDebutSemaine: Date,
   		startDate: Date,
-  		changeDate: Date
+  		changeDate: Date,
   		cours: [
   			{
 		 			tablePosition: Number,

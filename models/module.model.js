@@ -2,9 +2,9 @@ const mongoose=require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const moduleSchema=mongoose.Schema({
+const moduleSchema = Schema({
 	codeModule:{
-    type:Number,
+    type:String,
     required:true,
     unique:true
   },
@@ -16,36 +16,25 @@ const moduleSchema=mongoose.Schema({
     type:String,
     required:true
   },
-	credit:Number,
+  nomClasse:String,
+	credit:{
+    type: Number,
+    required: true
+  },
   startDate: {
     type:Date,
     required: true
-  }
+  },
 	cours: [
     {
-      idCours:{
-        type:String,
-        required:true
-      },
-      nomCours:{
-        type:String,
-        required:true
-      },
-      codeDuCours:{
-        type:Number,
-        required:true
-      },
-      poids:Number,
-      idPersonnel:{
-        type:String,
-        required:true
-      }
+      codeCours: String,
+      poids: String
     }
   ],
   history: [
     {
       _id:String,
-  	  codeModule:Number,
+  	  codeModule:String,
   	  nomModule:String,
   	  idClasse:String,
   	  credit:Number,
@@ -53,11 +42,8 @@ const moduleSchema=mongoose.Schema({
       changeDate: Date,
   	  cours: [
         {
-          idCours:String,
-          nomCours:String,
-          codeDuCours:Number,
-          poids:Number,
-          idEnseignant:String
+          codeCours:String,
+          poids:String
         }
       ]
     }

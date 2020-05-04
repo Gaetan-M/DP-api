@@ -5,16 +5,13 @@ const Schema = mongoose.Schema;
 
 const horaireSchema = new Schema({
   debutJournee: {
-    type: Date,
-    required: true,
+    type: Date
   },
   finJournee: {
-    type: Date,
-    required: true,
+    type: Date
   },
   dureeCour: {
-    type: Date,
-    required: true,
+    type: Date
   },
   heurePause: [
   	{
@@ -23,8 +20,7 @@ const horaireSchema = new Schema({
   	}
   ],
   startDate: {
-    type: Date,
-    require: true
+    type: Date
   },
   history: [
   	{
