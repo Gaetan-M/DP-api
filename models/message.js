@@ -3,7 +3,7 @@ const mongoose=require('mongoose');
 const messageSchema=mongoose.Schema({
 date:Date,
 dateTime:Date,
-idEtudiant:Boolean,
+idEtudiant:String,
 message:String,
 refFile:String,
 isEnseignant:Boolean

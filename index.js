@@ -24,9 +24,8 @@ const supportForum = require('./routes/supportForum.route')
 const forum = require('./routes/forum.route')
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}))
 app.use('/', personnelRoutes)
 app.use('/faculty', faculty)
 app.use('/coordo', coordonnateur)
@@ -114,9 +113,6 @@ const storage = new GridFsStorage({
         };
          resolve(fileInfo);
     });
-  },
-  metadata:(req,file,cb)=>{
-cb(null, { idCour: req.headers.id});
   }
 });
 
@@ -124,15 +120,21 @@ const upload = multer({ storage });
 
 /********ROUTES*****************************/
 app.post('/files/upload', upload.single('file'), async (req, res,next) => {
+ let idCour
+   console.log('idCour',ID)
+ // io.on('connection',(socket)=>{
+ //   socket.on('sendIDCOUR',(data)=>{
 
-    const support=new Support({idCour:req.headers.id,supports:req.file})
-  await  support.save()
-    .then(()=>console.log('Done'))
-    .catch(error=console.log('error'))
+ // })
+ // })
+  const support=new Support({idCour:ID,supports:req.file})
+    await  support.save()
+      .then(()=>console.log('Done'))
+      .catch(error=console.log('error'))
 
 
-  // console.log(upload.field)
-    res.redirect('/files');
+    // console.log(upload.field)
+res.redirect('/files');
 }
 );
 
