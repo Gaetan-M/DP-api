@@ -6,9 +6,8 @@ const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
-
 const auth = require('../middlewares/auth');
-
+const Support=require('../models/supportCour.model.js')
 // Mongo URI
 const mongoURI = process.env.MONGO_URI;
 
@@ -50,26 +49,9 @@ module.exports.postSupport=(upload, (req, res) => {
 });
 
 module.exports.getAllSupport= (req, res) => {
-  gfs.files.find().toArray((err, files) => {
-    // Check if files
-    if (!files || files.length === 0) {
-      res.json({ files: false });
-    } else {
-      files.map(file => {
-        if (
-          file.contentType === 'image/jpeg' ||
-          file.contentType === 'image/png'
-        ) {
-          file.isImage = true;
-        } else {
-          file.isImage = false;
-        }
-      });
-      console.log('files',files)
-      // res.render('index', { files: files });
-      res.json(files)
-    }
-  });
+Support.find({idCour:req.headers.id})
+.then(data=>res.status(200).json(data))
+.catch(error=>res.status(404).json({error}))
 };
 
 module.exports.getOneSupport=(req, res) => {

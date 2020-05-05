@@ -87,8 +87,9 @@ io.on('connection',(socket)=>{
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-const mongoURI = ' mongodb+srv://User:user@cluster0-mdzzl.mongodb.net/Dp-project?retryWrites=true&w=majority';
+const mongoURI = process.env.MONGO_URI;
 const mongoose=require('mongoose')
+const Support=require('./models/supportCour.model.js')
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI,{ useUnifiedTopology: true ,useNewUrlParser: true});
 
@@ -104,7 +105,7 @@ useNewUrlParser: true
 // Create storage engine
 const storage = new GridFsStorage({
   url: mongoURI,
-  file: (req, file) => {
+  file: async (req, file) => {
     return new Promise((resolve, reject) => {
         const filename = file.originalname;
         const fileInfo = {
@@ -113,16 +114,27 @@ const storage = new GridFsStorage({
         };
          resolve(fileInfo);
     });
+  },
+  metadata:(req,file,cb)=>{
+cb(null, { idCour: req.headers.id});
   }
 });
 
 const upload = multer({ storage });
 
 /********ROUTES*****************************/
-app.post('/files/upload', upload.single('file'), (req, res) => {
-  console.log('une requete')
+app.post('/files/upload', upload.single('file'), async (req, res,next) => {
+
+    const support=new Support({idCour:req.headers.id,supports:req.file})
+  await  support.save()
+    .then(()=>console.log('Done'))
+    .catch(error=console.log('error'))
+
+
+  // console.log(upload.field)
     res.redirect('/files');
-});
+}
+);
 
 server.listen(port, console.log(`Server started on port [${port}]`));
 
